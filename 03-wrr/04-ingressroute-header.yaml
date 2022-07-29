@@ -1,0 +1,23 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+    name: whoami-wrr-header
+    namespace: app
+spec:
+  entryPoints:
+     - websecure
+  routes:
+    - kind: Rule
+      match: Host(`<fixme>.demo.traefiklabs.tech`) && HeadersRegexp(`X-Canary-Header`, `knock-knock`)
+      services:
+        - kind: Service
+          name: whoamiv2
+          namespace: app
+          port: 80
+      middlewares:
+        - name: app-let-me-in@kubernetescrd
+  tls:
+    certResolver: le
+
+# see the priority docs: https://doc.traefik.io/traefik/routing/routers/#priority

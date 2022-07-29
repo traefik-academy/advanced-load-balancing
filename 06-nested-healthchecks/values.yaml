@@ -1,0 +1,34 @@
+image:
+  name: traefik
+  tag: "2.8.0"
+
+providers:
+  kubernetesCRD:
+    enabled: true
+    allowCrossNamespace: true
+
+additionalArguments:
+  - "--certificatesresolvers.le-staging.acme.tlschallenge=true"
+  - "--certificatesresolvers.le-staging.acme.email=<REPLACE_ME>"
+  - "--certificatesresolvers.le-staging.acme.storage=/data/acme.json"
+  - "--certificatesresolvers.le-staging.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+  - "--certificatesresolvers.le.acme.tlschallenge=true"
+  - "--certificatesresolvers.le.acme.email=<REPLACE_ME>"
+  - "--certificatesresolvers.le.acme.storage=/data/acme.json"
+  - "--providers.file.filename=/config/dynamic.yaml"
+
+persistence:
+  enabled: true
+  name: data
+  accessMode: ReadWriteOnce
+  size: 128Mi
+  path: /data
+
+logs:
+  access:
+    enabled: true
+
+volumes:
+  - name: '{{ printf "%s-configs" .Release.Name }}'
+    mountPath: "/config"
+    type: configMap
