@@ -37,7 +37,7 @@ data:
         whoami-router:
           entryPoints:
             - websecure
-          rule: Host(`nested.w1.demo.traefiklabs.tech`)
+          rule: Host(`<MY_DOMAIN>`)
           service: whoami-public
           tls:
             certResolver: le

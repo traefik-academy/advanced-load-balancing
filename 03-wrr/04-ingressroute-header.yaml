@@ -9,7 +9,7 @@ spec:
      - websecure
   routes:
     - kind: Rule
-      match: Host(`<fixme>.demo.traefiklabs.tech`) && HeadersRegexp(`X-Canary-Header`, `knock-knock`)
+      match: Host(`<MY_DOMAIN>`) && HeadersRegexp(`X-Canary-Header`, `knock-knock`)
       services:
         - kind: Service
           name: whoamiv2

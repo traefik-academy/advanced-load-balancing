@@ -7,7 +7,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`<fixme>.demo.traefiklabs.tech`)
+      match: Host(`<MY_DOMAIN>`)
       services:
         - kind: Service
           name: whoamiv1

@@ -17,13 +17,6 @@ additionalArguments:
   - "--certificatesresolvers.le.acme.storage=/data/acme.json"
   - "--providers.file.filename=/config/dynamic.yaml"
 
-persistence:
-  enabled: true
-  name: data
-  accessMode: ReadWriteOnce
-  size: 128Mi
-  path: /data
-
 logs:
   access:
     enabled: true
@@ -32,3 +25,13 @@ volumes:
   - name: '{{ printf "%s-configs" .Release.Name }}'
     mountPath: "/config"
     type: configMap
+
+# You can enable the persistence to store the ACME JSON file and avoid creating new certificates each time Traefik is restarted.
+# However, depending on your Kubernetes distribution, it could block the helm upgrade operation and force you to uninstall and re-install Traefik.
+
+# persistence:
+#   enabled: true
+#   name: data
+#   accessMode: ReadWriteOnce
+#   size: 128Mi
+#   path: /data
